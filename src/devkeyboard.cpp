@@ -92,6 +92,7 @@ string DevKeyboard::toUppercase(const string &str) {
             result += ' ';
         } else {
             if (i > 0 && 
+                std::isupper(static_cast<unsigned char>(str[i])) &&
                 (std::islower(static_cast<unsigned char>(str[i - 1])) ||
                  std::isdigit(static_cast<unsigned char>(str[i - 1]))  ||
                  (i + 1 < str.size() && std::islower(static_cast<unsigned char>(str[i + 1])) && !std::isspace(static_cast<unsigned char>(str[i - 1]))))) {
