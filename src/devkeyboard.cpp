@@ -91,6 +91,12 @@ string DevKeyboard::toUppercase(const string &str) {
         if (c == static_cast<unsigned char>('_')) {
             result += ' ';
         } else {
+            if (i > 0 && 
+                (std::islower(static_cast<unsigned char>(str[i - 1])) ||
+                 std::isdigit(static_cast<unsigned char>(str[i - 1]))  ||
+                 (i + 1 < str.size() && std::islower(static_cast<unsigned char>(str[i + 1])) && !std::isspace(static_cast<unsigned char>(str[i - 1]))))) {
+                result += ' ';
+            }
             result += static_cast<char>(std::toupper(str[i]));
         }
     }
@@ -100,7 +106,20 @@ string DevKeyboard::toUppercase(const string &str) {
 string DevKeyboard::toLowercase(const string &str) {
     string result;
     for (size_t i = 0; i < str.size(); ++i) {
-        result += static_cast<char>(std::tolower(str[i]));
+        unsigned char c = str[i];
+        if (c == static_cast<unsigned char>('_')) {
+            result += ' ';
+        } else {
+            if (i > 0 && 
+                std::isupper(static_cast<unsigned char>(str[i])) &&
+                (std::islower(static_cast<unsigned char>(str[i - 1])) ||
+                 std::isdigit(static_cast<unsigned char>(str[i - 1]))  ||
+                 (i + 1 < str.size() && std::islower(static_cast<unsigned char>(str[i + 1])) && !std::isspace(static_cast<unsigned char>(str[i - 1]))))) {
+                result += ' ';
+            }
+            result += static_cast<char>(std::tolower(str[i]));
+
+        }
     }
     return result;
 }
